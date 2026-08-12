@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff: RID &amp; Barcode Tool</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Staff: RID &amp; Barcode Tool</h1>
+    <div class="tag">Stage 2 &mdash; assign RID and generate the barcode</div>
+  </div>
+  <a class="mode-link" href="index.html">&larr; Customer Form</a>
+</header>
+
+<main>
+  <div class="step-indicator">
+    <div class="step" id="step1">1. Upload request PDF</div>
+    <div class="step" id="step2">2. Review &amp; assign RID</div>
+    <div class="step" id="step3">3. Download final PDF</div>
+  </div>
+
+  <div class="intro">
+    Upload the request PDF a customer emailed in. All specs stay editable here &mdash; correct anything
+    that needs it directly in your PDF viewer after downloading. This tool only assigns the RID and
+    bakes in the barcode image.
+  </div>
+
+  <section class="card" id="uploadCard">
+    <div class="card-head"><span class="num">1</span> Upload Request PDF</div>
+    <div class="card-body">
+      <label class="dropzone" id="dropzone">
+        <div id="dropzoneText">Drag &amp; drop the request PDF here, or click to browse</div>
+        <input type="file" id="fileInput" accept="application/pdf">
+      </label>
+      <div class="status-msg" id="uploadStatus"></div>
+    </div>
+  </section>
+
+  <section class="card" id="reviewCard" style="display:none;">
+    <div class="card-head"><span class="num">2</span> Review &amp; Assign RID</div>
+    <div class="card-body">
+      <div class="summary-box" id="summaryBox"></div>
+
+      <div class="grid cols-2" style="margin-top:16px;">
+        <div class="field">
+          <label for="ridInput">RID</label>
+          <input type="text" id="ridInput" placeholder="e.g. RID-2026-0413">
+        </div>
+        <div class="field">
+          <label for="reviewedByInput">Reviewed By <span class="opt">(optional)</span></label>
+          <input type="text" id="reviewedByInput">
+        </div>
+      </div>
+
+      <div class="actions-bar">
+        <button type="button" class="btn btn-primary" id="generateBtn">Generate Barcode</button>
+      </div>
+
+      <canvas id="barcodeCanvas"></canvas>
+      <div class="barcode-preview" id="barcodePreview" style="display:none;">
+        <img id="barcodeImg" alt="Generated barcode">
+      </div>
+      <div class="status-msg" id="generateStatus"></div>
+    </div>
+  </section>
+
+  <section class="card" id="downloadCard" style="display:none;">
+    <div class="card-head"><span class="num">3</span> Download Final PDF</div>
+    <div class="card-body">
+      <p style="margin-top:0;color:var(--muted);font-size:13.5px;">
+        The barcode has been embedded on the Internal Use page. All other request fields remain
+        editable. Download the final PDF for your production file.
+      </p>
+      <div class="actions-bar" style="justify-content:flex-start;">
+        <button type="button" class="btn btn-primary" id="downloadBtn">Download Final PDF</button>
+        <button type="button" class="btn" id="startOverBtn">Start Over</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">Barcode format: Code 128. Regenerating the barcode after editing the RID will overwrite the previous barcode image.</div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js"></script>
+<script src="pdf-config.js"></script>
+<script src="staff.js"></script>
+</body>
+</html>

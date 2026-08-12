@@ -1,0 +1,296 @@
+:root{
+  --navy:#1c2b3a;
+  --navy-light:#2c4258;
+  --accent:#c8a13a;
+  --bg:#f4f5f7;
+  --card:#ffffff;
+  --border:#d8dce1;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --danger:#b3261e;
+  --radius:8px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.4;
+}
+header.app-header{
+  background:var(--navy);
+  color:#fff;
+  padding:22px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+header.app-header h1{
+  margin:0;
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:.3px;
+}
+header.app-header .tag{
+  font-size:12px;
+  color:#c9d3dd;
+  margin-top:2px;
+}
+header.app-header a.mode-link{
+  color:#fff;
+  background:var(--navy-light);
+  padding:8px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  font-size:13px;
+  border:1px solid #3a5470;
+}
+main{
+  max-width:920px;
+  margin:28px auto 80px;
+  padding:0 20px;
+}
+.intro{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 20px;
+  margin-bottom:20px;
+  font-size:14px;
+  color:var(--muted);
+}
+section.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+  overflow:hidden;
+}
+section.card .card-head{
+  background:var(--navy);
+  color:#fff;
+  padding:10px 18px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.3px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+section.card .card-head .num{
+  background:var(--accent);
+  color:var(--navy);
+  width:20px;height:20px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+section.card .card-body{
+  padding:18px 20px 22px;
+}
+.grid{
+  display:grid;
+  gap:14px 18px;
+}
+.grid.cols-2{grid-template-columns:1fr 1fr;}
+.grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.field.span-2{grid-column:span 2;}
+.field.span-3{grid-column:span 3;}
+label{
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--navy);
+}
+label .opt{
+  font-weight:400;
+  color:var(--muted);
+  font-size:11px;
+}
+input[type=text],input[type=number],input[type=date],input[type=tel],input[type=email],select,textarea{
+  padding:8px 10px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  font-size:14px;
+  font-family:inherit;
+  background:#fff;
+  color:var(--text);
+  width:100%;
+}
+textarea{resize:vertical;min-height:70px;}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid var(--accent);
+  outline-offset:0;
+  border-color:var(--accent);
+}
+.checkbox-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px 16px;
+}
+.checkbox-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:13.5px;
+}
+.checkbox-item input{width:16px;height:16px;flex:none;}
+.conditional{
+  margin-top:10px;
+  padding:10px 12px;
+  background:#f8f7f2;
+  border:1px dashed var(--accent);
+  border-radius:6px;
+  display:none;
+}
+.conditional.show{display:block;}
+.subgroup{
+  margin-top:8px;
+  padding-left:22px;
+  display:none;
+  gap:14px;
+}
+.subgroup.show{display:flex;flex-wrap:wrap;}
+.subgroup .field{min-width:160px;}
+table.rows-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:10px;
+}
+table.rows-table th{
+  text-align:left;
+  font-size:11.5px;
+  color:var(--muted);
+  font-weight:600;
+  padding:6px 8px;
+  border-bottom:1px solid var(--border);
+}
+table.rows-table td{
+  padding:5px 6px;
+  vertical-align:top;
+}
+table.rows-table input,table.rows-table select{
+  padding:6px 8px;
+  font-size:13px;
+}
+table.rows-table td.rm{width:32px;text-align:center;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 16px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--navy);
+  font-size:13.5px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn:hover{background:#f0f1f3;}
+.btn-primary{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+}
+.btn-primary:hover{background:var(--navy-light);}
+.btn-add{
+  background:#eef2f6;
+  border-style:dashed;
+}
+.btn-remove{
+  background:none;
+  border:none;
+  color:var(--danger);
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+  padding:4px 6px;
+}
+.actions-bar{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:8px;
+}
+.footer-note{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:18px;
+}
+.status-msg{
+  margin-top:14px;
+  padding:10px 14px;
+  border-radius:6px;
+  font-size:13.5px;
+  display:none;
+}
+.status-msg.ok{display:block;background:#eaf6ec;color:#1e6b2e;border:1px solid #bfe3c5;}
+.status-msg.err{display:block;background:#fbeaea;color:var(--danger);border:1px solid #f0c4c1;}
+.step-indicator{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+.step-indicator .step{
+  flex:1;
+  padding:10px 14px;
+  border-radius:6px;
+  background:var(--card);
+  border:1px solid var(--border);
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--muted);
+}
+.step-indicator .step.active{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+.dropzone{
+  border:2px dashed var(--border);
+  border-radius:var(--radius);
+  padding:32px 20px;
+  text-align:center;
+  color:var(--muted);
+  cursor:pointer;
+  background:#fafbfc;
+}
+.dropzone.drag{
+  border-color:var(--accent);
+  background:#faf6ea;
+}
+.dropzone input{display:none;}
+.summary-box{
+  background:#f8f9fb;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:12px 14px;
+  font-size:13px;
+  color:var(--text);
+}
+.summary-box strong{color:var(--navy);}
+canvas#barcodeCanvas{display:none;}
+.barcode-preview{
+  text-align:center;
+  padding:14px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-top:14px;
+}
+.barcode-preview img{max-width:100%;}
+@media(max-width:720px){
+  .grid.cols-2,.grid.cols-3{grid-template-columns:1fr;}
+  .field.span-2,.field.span-3{grid-column:span 1;}
+  .checkbox-grid{grid-template-columns:repeat(2,1fr);}
+}

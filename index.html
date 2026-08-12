@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Requisition Form</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Print Requisition</h1>
+    <div class="tag">Submit a print job request</div>
+  </div>
+  <a class="mode-link" href="staff.html">Staff: RID &amp; Barcode Tool &rarr;</a>
+</header>
+
+<main>
+  <div class="intro">
+    Fill out the form below and click <strong>Create Request</strong>. A request PDF will be generated
+    and downloaded to your computer &mdash; please email that PDF to Print Services to submit your job.
+    Fields on the PDF remain editable so staff can correct or clarify specs during review.
+  </div>
+
+  <form id="requestForm" novalidate>
+
+    <!-- 1. Order Info -->
+    <section class="card">
+      <div class="card-head"><span class="num">1</span> Order Info</div>
+      <div class="card-body grid cols-3">
+        <div class="field">
+          <label for="orderType">Order Type</label>
+          <select id="orderType">
+            <option value="New Request">New Request</option>
+            <option value="Reprint / Re-order">Reprint / Re-order</option>
+          </select>
+        </div>
+        <div class="field" id="previousOrderField" style="display:none;">
+          <label for="previousOrder">Previous Order #</label>
+          <input type="text" id="previousOrder" placeholder="e.g. RID-2026-0413">
+        </div>
+        <div class="field">
+          <label for="dateRequired">Date Required</label>
+          <input type="date" id="dateRequired">
+        </div>
+        <div class="field span-2">
+          <label for="requestedBy">Requested By</label>
+          <input type="text" id="requestedBy" placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="requestorEmail">Your Email</label>
+          <input type="email" id="requestorEmail" placeholder="name@institution.edu">
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Account -->
+    <section class="card">
+      <div class="card-head"><span class="num">2</span> Account</div>
+      <div class="card-body grid cols-2">
+        <div class="field">
+          <label for="accountNumber">Account #</label>
+          <input type="text" id="accountNumber">
+        </div>
+        <div class="field">
+          <label for="accountName">Account Name</label>
+          <input type="text" id="accountName">
+        </div>
+        <div class="field">
+          <label for="budgetCode">Budget Code</label>
+          <input type="text" id="budgetCode">
+        </div>
+        <div class="field">
+          <label for="purchaseOrder">Purchase Order</label>
+          <input type="text" id="purchaseOrder">
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Shipping -->
+    <section class="card">
+      <div class="card-head"><span class="num">3</span> Shipping</div>
+      <div class="card-body grid cols-2">
+        <div class="field">
+          <label for="shipMethod">Method</label>
+          <select id="shipMethod">
+            <option value="Campus Mail">Campus Mail</option>
+            <option value="Pickup">Pickup</option>
+            <option value="Courier">Courier</option>
+            <option value="Canada Post">Canada Post</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="shipInstitution">Institution</label>
+          <input type="text" id="shipInstitution">
+        </div>
+        <div class="field span-2">
+          <label for="shipAddress">Address</label>
+          <textarea id="shipAddress" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="shipAttention">Attention</label>
+          <input type="text" id="shipAttention">
+        </div>
+        <div class="field">
+          <label for="shipPhone">Phone</label>
+          <input type="tel" id="shipPhone">
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Graphics -->
+    <section class="card">
+      <div class="card-head"><span class="num">4</span> Graphics</div>
+      <div class="card-body">
+        <div class="checkbox-grid" id="graphicsChecks">
+          <label class="checkbox-item"><input type="checkbox" value="Hard Copy Supplied"> Hard Copy Supplied</label>
+          <label class="checkbox-item"><input type="checkbox" value="Mockup Supplied"> Mockup Supplied</label>
+          <label class="checkbox-item"><input type="checkbox" value="PC"> PC</label>
+          <label class="checkbox-item"><input type="checkbox" value="MAC"> MAC</label>
+          <label class="checkbox-item"><input type="checkbox" value="PDF"> PDF</label>
+          <label class="checkbox-item"><input type="checkbox" value="Post Script"> Post Script</label>
+          <label class="checkbox-item"><input type="checkbox" value="Native"> Native</label>
+        </div>
+        <div class="field" style="max-width:220px;margin-top:14px;">
+          <label for="totalFiles">Total Files Supplied</label>
+          <input type="number" id="totalFiles" min="0" step="1">
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Printing -->
+    <section class="card">
+      <div class="card-head"><span class="num">5</span> Printing</div>
+      <div class="card-body">
+        <table class="rows-table" id="printingTable">
+          <thead>
+            <tr>
+              <th style="width:20%">Pages</th>
+              <th style="width:22%">Sided</th>
+              <th style="width:18%">Qty</th>
+              <th style="width:34%">File Name</th>
+              <th class="rm"></th>
+            </tr>
+          </thead>
+          <tbody id="printingRows"></tbody>
+        </table>
+        <button type="button" class="btn btn-add" id="addRowBtn">+ Add Row</button>
+
+        <div class="checkbox-grid" id="printingChecks" style="margin-top:18px;">
+          <label class="checkbox-item"><input type="checkbox" value="Digital"> Digital</label>
+          <label class="checkbox-item"><input type="checkbox" value="iGen"> iGen</label>
+          <label class="checkbox-item"><input type="checkbox" value="Offset"> Offset</label>
+          <label class="checkbox-item"><input type="checkbox" value="Black"> Black</label>
+          <label class="checkbox-item"><input type="checkbox" value="Colour"> Colour</label>
+          <label class="checkbox-item"><input type="checkbox" id="spotColourCheck" value="Spot Colour"> Spot Colour</label>
+          <label class="checkbox-item"><input type="checkbox" value="Proof"> Proof</label>
+          <label class="checkbox-item"><input type="checkbox" value="Digital Proof"> Digital Proof</label>
+          <label class="checkbox-item"><input type="checkbox" value="Hard Copy Proof"> Hard Copy Proof</label>
+        </div>
+        <div class="conditional" id="spotColourField">
+          <div class="field">
+            <label for="spotColourValue">Spot Colour</label>
+            <input type="text" id="spotColourValue" placeholder="e.g. PMS 287">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Paper -->
+    <section class="card">
+      <div class="card-head"><span class="num">6</span> Paper</div>
+      <div class="card-body grid cols-3">
+        <div class="field">
+          <label for="paperSize">Size</label>
+          <select id="paperSize">
+            <option value="8.5 x 11">8.5 x 11</option>
+            <option value="8.5 x 14">8.5 x 14</option>
+            <option value="11 x 17">11 x 17</option>
+            <option value="12 x 24">12 x 24</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="paperWeight">Weight</label>
+          <select id="paperWeight">
+            <option value="20lb">20lb</option>
+            <option value="60lb">60lb</option>
+            <option value="70lb">70lb</option>
+            <option value="80lb">80lb</option>
+            <option value="100lb">100lb</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="paperColour">Colour</label>
+          <select id="paperColour">
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Green">Green</option>
+          </select>
+        </div>
+        <div class="field span-3" id="otherDimensionsField" style="display:none;">
+          <label for="otherDimensions">Other Dimensions</label>
+          <input type="text" id="otherDimensions" placeholder="e.g. 9 x 12">
+        </div>
+        <div class="field span-3">
+          <label class="checkbox-item"><input type="checkbox" id="specialPaperCheck"> Special Paper</label>
+        </div>
+        <div class="conditional span-3" id="specialPaperField" style="grid-column:span 3;">
+          <div class="field">
+            <label for="specialPaperValue">Special Paper</label>
+            <input type="text" id="specialPaperValue" placeholder="Specify stock">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Finishing -->
+    <section class="card">
+      <div class="card-head"><span class="num">7</span> Finishing</div>
+      <div class="card-body">
+        <div class="checkbox-grid" id="finishingChecks">
+          <label class="checkbox-item"><input type="checkbox" value="Collate"> Collate</label>
+          <label class="checkbox-item"><input type="checkbox" value="Staples"> Staples</label>
+          <label class="checkbox-item"><input type="checkbox" id="foldingCheck" value="Folding"> Folding</label>
+          <label class="checkbox-item"><input type="checkbox" id="coversCheck" value="Covers"> Covers</label>
+          <label class="checkbox-item"><input type="checkbox" value="Wrap Around"> Wrap Around</label>
+          <label class="checkbox-item"><input type="checkbox" value="Coil"> Coil</label>
+          <label class="checkbox-item"><input type="checkbox" value="Saddle Stitch"> Saddle Stitch</label>
+          <label class="checkbox-item"><input type="checkbox" value="Punch"> Punch</label>
+          <label class="checkbox-item"><input type="checkbox" value="Score"> Score</label>
+        </div>
+
+        <div class="subgroup" id="foldingSub">
+          <div class="field">
+            <label>Fold Type</label>
+            <select id="foldType">
+              <option value="Half Fold">Half Fold</option>
+              <option value="Letter Fold">Letter Fold</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Fold Direction</label>
+            <select id="foldDirection">
+              <option value="Roll In">Roll In</option>
+              <option value="Roll Out">Roll Out</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="subgroup" id="coversSub">
+          <label class="checkbox-item"><input type="checkbox" id="coverFront"> Front</label>
+          <label class="checkbox-item"><input type="checkbox" id="coverBack"> Back</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Packaging -->
+    <section class="card">
+      <div class="card-head"><span class="num">8</span> Packaging</div>
+      <div class="card-body">
+        <div class="checkbox-grid" id="packagingChecks">
+          <label class="checkbox-item"><input type="checkbox" value="Loose"> Loose</label>
+          <label class="checkbox-item"><input type="checkbox" value="Elastics"> Elastics</label>
+          <label class="checkbox-item"><input type="checkbox" id="bandInCheck" value="Band In"> Band In</label>
+          <label class="checkbox-item"><input type="checkbox" id="otherPackagingCheck" value="Other"> Other</label>
+        </div>
+        <div class="conditional" id="bandInField">
+          <div class="field" style="max-width:180px;">
+            <label for="bandCount"># per Band</label>
+            <input type="number" id="bandCount" min="1" step="1">
+          </div>
+        </div>
+        <div class="conditional" id="otherPackagingField">
+          <div class="field">
+            <label for="otherPackagingValue">Other</label>
+            <input type="text" id="otherPackagingValue">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Additional Information -->
+    <section class="card">
+      <div class="card-head"><span class="num">9</span> Additional Information</div>
+      <div class="card-body">
+        <div class="field">
+          <label for="comments">Comments</label>
+          <textarea id="comments" rows="4" placeholder="Any additional notes for Print Services..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions-bar">
+      <button type="button" class="btn btn-primary" id="createRequestBtn">Create Request</button>
+    </div>
+    <div class="status-msg" id="statusMsg"></div>
+    <div class="footer-note">Fields in the generated PDF stay editable &mdash; Print Services will review specs, assign an RID, and generate the barcode.</div>
+  </form>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="pdf-config.js"></script>
+<script src="pdf-builder.js"></script>
+<script src="form.js"></script>
+</body>
+</html>
